@@ -48,9 +48,9 @@ Don't save this for the last minute! There are a few dependencies that will give
 
 1. Fork this repository to your github account. 
 
-- Go to https://github.com/groxio-learning/phx_124
+- Go to https://github.com/groxio-learning/phx124
 - Click the `fork` button in the upper right corner
-- Navigate to *your local version* (at something like git@github.com:your-github-user/phx_124.git. )
+- Navigate to *your local version* (at something like git@github.com:your-github-user/phx124.git. )
 - Copy the clone address to your clipboard. In the upper right, click `clone or download` then `copy to clipboard`
 
 2. Clone your local version to your local machine. 
@@ -60,45 +60,45 @@ Don't save this for the last minute! There are a few dependencies that will give
 ```
 >  git clone <paste the url>
 ...clones repo...
-cd phx_124
+cd phx124
 ```
 
 - Verify your remote: 
 
 ```
 $ git remote -v
-> origin  https://github.com/your-user/phx_124.git (fetch)
-> origin  https://github.com/your-user/phx_124.git (push)
+> origin  https://github.com/your-user/phx124.git (fetch)
+> origin  https://github.com/your-user/phx124.git (push)
 ```
 
 
 - If there's no origin, set it. Make sure you *replace your-github-user*:
 
 ```
-phx_124> git remote add origin https://github.com/your-github-user/phx_124.git
+phx124> git remote add origin https://github.com/your-github-user/phx124.git
 ```
 
 - Verify your remote: 
 
 ```
 $ git remote -v
-> origin  https://github.com/your-user/phx_124.git (fetch)
-> origin  https://github.com/your-user/phx_124.git (push)
+> origin  https://github.com/your-user/phx124.git (fetch)
+> origin  https://github.com/your-user/phx124.git (push)
 ```
 
 - Set the upstream to the Groxio repo:
 
 ```
-phx_124> git remote add upstream https://github.com/groxio-learning/phx_124.git
+phx124> git remote add upstream https://github.com/groxio-learning/phx124.git
 ```
 
 - Verify the remotes: 
 
 ```
-> origin  https://github.com/your-user/phx_124.git (fetch)
-> origin  https://github.com/your-user/phx_124.git (push)
-> upstream  https://github.com/groxio-learning/phx_124.git (fetch)
-> upstream  https://github.com/groxio-learning/phx_124.git (push)
+> origin  https://github.com/your-user/phx124.git (fetch)
+> origin  https://github.com/your-user/phx124.git (push)
+> upstream  https://github.com/groxio-learning/phx124.git (fetch)
+> upstream  https://github.com/groxio-learning/phx124.git (push)
 ```
 
 3. Now check out your setup. Send me a pull request: Edit the file "pull_requests.md" and add your name: 
