@@ -11,6 +11,9 @@
 # and so on) as they will fail if something goes wrong.
 
 # email and password for each user
+
+alias Vitali.Accounts
+
 users = [
   %{email: "batman@example.com", password: "password"},
   %{email: "wolverine@example.com", password: "password"},
@@ -19,4 +22,5 @@ users = [
   %{email: "ironman@example.com", password: "password"}
   ]
 
-Enum.map(users, fn user -> Vitali.Accounts.User.register_user(%Vitali.Accounts.User{}, user) end)
+Enum.map(users, fn user -> Accounts.register_user(user) end)
+
