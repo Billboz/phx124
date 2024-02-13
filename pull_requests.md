@@ -1,4 +1,5 @@
 - Bruce Tate
 - Bill Tihen
 - Kevin Genus
+- Daniel Pinheiro
 - other names
