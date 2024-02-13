@@ -2,4 +2,4 @@
 - Bill Tihen
 - Kevin Genus
 - Daniel Pinheiro
-- other names
+- Bill Bozarth
