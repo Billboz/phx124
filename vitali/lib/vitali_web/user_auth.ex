@@ -193,6 +193,14 @@ defmodule VitaliWeb.UserAuth do
     end
   end
 
+  def show_user_id(conn, _opts) do
+    IO.inspect(conn.assigns.current_user.id, label: "Current user ID")
+    conn
+  end
+
+  # if user is hulk we have an admin, then show the dashboard
+  # def user_is_admin(conn, _opts) do
+
   @doc """
   Used for routes that require the user to be authenticated.
 

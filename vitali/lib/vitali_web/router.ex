@@ -62,7 +62,7 @@ defmodule VitaliWeb.Router do
   end
 
   scope "/", VitaliWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :require_authenticated_user, :show_user_id]
 
     live_session :require_authenticated_user,
       on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}] do

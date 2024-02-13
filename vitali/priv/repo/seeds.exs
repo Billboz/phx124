@@ -20,7 +20,6 @@ users = [
   %{email: "hulk@example.com", password: "password"},
   %{email: "drmanhattan@example.com", password: "password"},
   %{email: "ironman@example.com", password: "password"}
-  ]
+]
 
 Enum.map(users, fn user -> Accounts.register_user(user) end)
-
