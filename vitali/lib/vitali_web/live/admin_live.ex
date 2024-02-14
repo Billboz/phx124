@@ -6,25 +6,39 @@ defmodule VitaliWeb.AdminLive do
 
   def render(assigns) do
     ~H"""
-    <h1>Admin</h1>
-    total users: <%= @users |> Enum.count() %>
-    <table>
-      <tr>
-        <th>Email</th>
-        <th>Roles</th>
-        <th>Actions</th>
-      </tr>
-      <%= for user <- @users do %>
+    <h1 class="text-4xl text-center">Admin</h1>
+    <p class="text-center">total users: <%= @users |> Enum.count() %></p>
+    <div style="margin-top: 20px;">
+      <table class="mx-auto">
         <tr>
-          <td><%= user.email %></td>
-          <td><%= user.roles |> Enum.join(", ") %></td>
-          <td>
-            <button phx-click="grant" phx-value-id={user.id}>Grant</button>
-            <button phx-click="revoke" phx-value-id={user.id}>Revoke</button>
-          </td>
+          <th class="px-4 py-2">Email</th>
+          <th class="px-4 py-2">Roles</th>
+          <th class="px-4 py-2">Actions</th>
         </tr>
-      <% end %>
-    </table>
+        <%= for user <- @users do %>
+          <tr class={if rem(Enum.find_index(@users, &(&1 == user)), 2) == 0, do: "bg-gray-100"}>
+            <td class="px-4 py-2"><%= user.email %></td>
+            <td class="px-4 py-2"><%= user.roles |> Enum.join(", ") %></td>
+            <td class="px-4 py-2">
+              <button
+                phx-click="grant"
+                phx-value-id={user.id}
+                class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Grant
+              </button>
+              <button
+                phx-click="revoke"
+                phx-value-id={user.id}
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Revoke
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
     """
   end
 
