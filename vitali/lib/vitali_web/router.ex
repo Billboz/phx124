@@ -21,6 +21,8 @@ defmodule VitaliWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/counter", CounterLive, :index
   end
 
   # Other scopes may use custom stacks.
