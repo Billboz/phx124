@@ -23,6 +23,7 @@ defmodule VitaliWeb.Router do
     get "/", PageController, :home
 
     live "/counter", CounterLive, :index
+    live "/admin", AdminLive, :index
   end
 
   # Other scopes may use custom stacks.
