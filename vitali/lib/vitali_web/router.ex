@@ -38,7 +38,7 @@ defmodule VitaliWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through [:browser, :require_authenticated_user, :require_admin_user]
 
       live_dashboard "/dashboard", metrics: VitaliWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
