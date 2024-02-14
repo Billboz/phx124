@@ -7,6 +7,7 @@ defmodule Vitali.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :roles, {:array, :string}, default: []
 
     timestamps()
   end
@@ -39,6 +40,13 @@ defmodule Vitali.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  def admin_roles_changeset(user, attrs, _opts \\ []) do
+    user
+    |> cast(attrs, [:roles])
+    |> validate_required([:roles])
+    |> validate_inclusion(:roles, [[], ["admin"]])
   end
 
   def admin?(user) do

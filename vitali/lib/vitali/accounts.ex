@@ -128,6 +128,22 @@ defmodule Vitali.Accounts do
     |> Ecto.Changeset.apply_action(:update)
   end
 
+  def grant_admin(user) do
+    new_roles = 
+      ["admin" | user.roles]
+      |> Enum.uniq()
+
+    user
+    |> User.admin_roles_changeset(%{roles: new_roles})
+    |> Repo.update()
+  end
+
+  def revoke_admin(user) do
+    user
+    |> User.admin_roles_changeset(%{roles: user.roles -- ["admin"]})
+    |> Repo.update()
+  end
+    
   @doc """
   Updates the user email using the given token.
 
