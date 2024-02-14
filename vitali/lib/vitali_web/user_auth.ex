@@ -5,6 +5,7 @@ defmodule VitaliWeb.UserAuth do
   import Phoenix.Controller
 
   alias Vitali.Accounts
+  alias Vitali.Accounts.User
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change
@@ -199,7 +200,15 @@ defmodule VitaliWeb.UserAuth do
   end
 
   # if user is hulk we have an admin, then show the dashboard
-  # def user_is_admin(conn, _opts) do
+  def user_is_admin(conn, _opts) do
+    if conn.assigns.current_user.email == "hulk@example.com" do
+      conn
+    else
+      conn
+      |> redirect(to: ~p"/")
+      |> halt()
+    end
+  end
 
   @doc """
   Used for routes that require the user to be authenticated.
@@ -215,6 +224,18 @@ defmodule VitaliWeb.UserAuth do
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
       |> redirect(to: ~p"/users/log_in")
+      |> halt()
+    end
+  end
+
+  def require_admin_user(conn, _opts) do
+    if User.admin?(conn.assigns.current_user) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be an admin to access this page.")
+      |> maybe_store_return_to()
+      |> redirect(to: ~p"/")
       |> halt()
     end
   end

@@ -41,6 +41,10 @@ defmodule Vitali.Accounts.User do
     |> validate_password(opts)
   end
 
+  def admin?(user) do
+    user.email == "hulk@example.com"
+  end
+
   defp validate_email(changeset, opts) do
     changeset
     |> validate_required([:email])
