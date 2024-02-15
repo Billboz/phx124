@@ -50,7 +50,7 @@ defmodule Vitali.Accounts.User do
   end
 
   def admin?(user) do
-    user.email == "hulk@example.com"
+    "admin" in user.roles
   end
 
   defp validate_email(changeset, opts) do
