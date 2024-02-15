@@ -23,16 +23,15 @@ defmodule VitaliWeb.Router do
     get "/", PageController, :home
 
     live "/counter", CounterLive, :index
-
   end
 
   scope "/admin", VitaliWeb do
     pipe_through [:browser, :require_authenticated_user, :require_admin_user]
 
     live_session :require_admin_user,
-      on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}] do
-        live "/grant", AdminLive, :index
-      end
+      on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}, {VitaliWeb.UserAuth, :ensure_admin}] do
+      live "/grant", AdminLive, :index
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -80,6 +79,11 @@ defmodule VitaliWeb.Router do
       on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
+
+    live_session :life_builder,
+      on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}] do
+      live "/life/builder", BuilderLive, :edit
     end
   end
 
