@@ -60,6 +60,11 @@ defmodule Vitali.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def list_users do
+    from(u in User, order_by: [asc: u.email])
+    |> Repo.all()
+  end
+
   ## User registration
 
   @doc """
@@ -128,8 +133,13 @@ defmodule Vitali.Accounts do
     |> Ecto.Changeset.apply_action(:update)
   end
 
-  def grant_admin(user) do
-    new_roles = 
+  def grant_admin(id) when is_integer(id) do
+    user = get_user!(id)
+    grant_admin(user)
+  end
+
+  def grant_admin(%User{} = user) do
+    new_roles =
       ["admin" | user.roles]
       |> Enum.uniq()
 
@@ -138,12 +148,17 @@ defmodule Vitali.Accounts do
     |> Repo.update()
   end
 
-  def revoke_admin(user) do
+  def revoke_admin(id) when is_integer(id) do
+    user = get_user!(id)
+    revoke_admin(user)
+  end
+
+  def revoke_admin(%User{} = user) do
     user
     |> User.admin_roles_changeset(%{roles: user.roles -- ["admin"]})
     |> Repo.update()
   end
-    
+
   @doc """
   Updates the user email using the given token.
 
