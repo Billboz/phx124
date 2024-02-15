@@ -16,7 +16,6 @@ defmodule VitaliWeb.CoreComponents do
   """
   use Phoenix.Component
 
-  alias Logger.Backends.Internal
   alias Phoenix.LiveView.JS
   import VitaliWeb.Gettext
 
