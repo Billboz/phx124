@@ -28,6 +28,7 @@ defmodule VitaliWeb.AdminLive do
                 Grant
               </button>
               <button
+                :if={@current_user.id != user.id}
                 phx-click="revoke"
                 phx-value-id={user.id}
                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
