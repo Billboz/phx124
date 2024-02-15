@@ -35,7 +35,7 @@ defmodule Vitali.Library do
       ** (Ecto.NoResultsError)
 
   """
-  def get_game!(id), do: Repo.get!(Game, id)
+  def get_game!(id), do: Repo.get!(Game, id) |> Repo.preload(:cells) |> Repo.preload(:user)
 
   @doc """
   Creates a game.
@@ -49,10 +49,39 @@ defmodule Vitali.Library do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_game(attrs \\ %{}) do
-    %Game{}
-    |> Game.changeset(attrs)
-    |> Repo.insert()
+  def create_game(%{name: _name, user_id: _user} = attrs \\ %{}) do
+    return_value =
+      %Game{}
+      |> Game.changeset(attrs)
+      |> Repo.insert()
+
+    {:ok, game} = return_value
+
+    game
+    |> populate_game_with_cells()
+
+    # best line of code in the whole project
+    {:ok, get_game!(game.id)}
+  end
+
+  def populate_game_with_cells(game) do
+    for x <- 0..10, y <- 0..10 do
+      new_cell(%{x: x, y: y, game_id: game.id})
+    end
+
+    game
+  end
+
+  def new_cell(%{x: _x, y: _y, game_id: _game} = attrs) do
+    %Vitali.Library.Cell{} |> Vitali.Library.Cell.changeset(attrs) |> Repo.insert()
+  end
+
+  def get_cell_state(%{x: x, y: y, game_id: game_id}) do
+    Vitali.Repo.get_by(Vitali.Library.Cell, x: x, y: y, game_id: game_id).is_live
+  end
+
+  def get_cell_by(%{x: x, y: y, game_id: game_id}) do
+    Vitali.Repo.get_by(Vitali.Library.Cell, x: x, y: y, game_id: game_id)
   end
 
   @doc """
