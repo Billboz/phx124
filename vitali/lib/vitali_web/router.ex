@@ -83,13 +83,14 @@ defmodule VitaliWeb.Router do
 
     live_session :life_builder,
       on_mount: [{VitaliWeb.UserAuth, :ensure_authenticated}] do
-      live("/life/builder", BuilderLive, :edit)
+      live("/life/builder/:id", BuilderLive, :edit)
       live("/games", GameLive.Index, :index)
       live("/games/new", GameLive.Index, :new)
-      live("/games/:id/edit", GameLive.Index, :edit)
 
       live("/games/:id", GameLive.Show, :show)
       live("/games/:id/show/edit", GameLive.Show, :edit)
+      live("/games/:id/run", GameLive.Show)
+      live("/games/:id/watch", GameLive.Show)
     end
   end
 
