@@ -1,7 +1,8 @@
 defmodule VitaliWeb.BuilderLive do
   # alias Vitali.Accounts
   # alias Vitali.Accounts.User
-  alias Vitali.Library
+  alias Vitali.{Library, Board}
+
   import VitaliWeb.CoreComponents
 
   use VitaliWeb, :live_view
@@ -14,10 +15,9 @@ defmodule VitaliWeb.BuilderLive do
     <% cells = @game.cells %>
 
       <%= for x <- 0..10, y <- 0..10 do %>
-      <% cell = Library.get_cell_by(%{x: x, y: y, game_id: @game.id}) %>
-        <% is_live = cell.is_live %>
+      <% cell = @board[{x, y}] %>
 
-          <.life_cell x={x} y={y} live={is_live}/>
+          <.life_cell x={x} y={y} live={cell}/>
       <% end %>
     </svg>
 
@@ -34,17 +34,15 @@ defmodule VitaliWeb.BuilderLive do
   # end
 
   def mount(_params, _session, socket) do
+    board = Board.new(10, 10)
     {:ok, game} = Vitali.Library.create_game(%{name: "test1", user_id: 1})
-    {:ok, assign(socket, game: game)}
+    {:ok, assign(socket, game: game, board: board)}
   end
 
-  def handle_event("toggle", %{"live" => false, "id" => id} = attrs, socket) do
-    IO.inspect(attrs, label: "attrs - dead")
-    {:noreply, socket}
-  end
-
-  def handle_event("toggle", %{live: true, id: id} = attrs, socket) do
-    IO.inspect(attrs, label: "attrs - live")
-    {:noreply, socket}
+  def handle_event("toggle", %{"x" => x, "y" => y}, socket) do
+    x = String.to_integer(x)
+    y = String.to_integer(y)
+    board = Board.toggle(socket.assigns.board, {x, y})
+    {:noreply, assign(socket, board: board)}
   end
 end
