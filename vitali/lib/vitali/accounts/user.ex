@@ -3,11 +3,13 @@ defmodule Vitali.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :email, :string
-    field :password, :string, virtual: true, redact: true
-    field :hashed_password, :string, redact: true
-    field :confirmed_at, :naive_datetime
-    field :roles, {:array, :string}, default: []
+    field(:email, :string)
+    field(:password, :string, virtual: true, redact: true)
+    field(:hashed_password, :string, redact: true)
+    field(:confirmed_at, :naive_datetime)
+    field(:roles, {:array, :string}, default: [])
+
+    has_many(:games, Vitali.Library.Game)
 
     timestamps()
   end
