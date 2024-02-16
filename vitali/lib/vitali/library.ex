@@ -69,7 +69,7 @@ defmodule Vitali.Library do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     entries =
-      for x <- 0..39, y <- 0..39 do
+      for x <- 0..Board.width(), y <- 0..Board.height() do
         (%{x: x, y: y, game_id: game.id, inserted_at: now, updated_at: now})
       end
 
