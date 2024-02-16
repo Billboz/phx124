@@ -23,7 +23,7 @@ defmodule VitaliWeb.GameLive.Index do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Game")
-    |> assign(:game, %Game{})
+    |> assign(:game, %Game{user_id: socket.assigns.current_user.id})
   end
 
   defp apply_action(socket, :index, _params) do

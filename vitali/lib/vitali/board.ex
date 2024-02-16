@@ -3,6 +3,10 @@ defmodule Vitali.Board do
     for x <- 0..w, y <- 0..h, into: %{}, do: {{x, y}, Enum.random([true, false])}
   end
 
+  def new(cells) do
+    for %{x: x, y: y, is_live: is_live} <- cells, into: %{}, do: {{x, y}, is_live}
+  end
+
   def toggle(board, point) do
     old_value = Map.get(board, point)
     Map.put(board, point, !old_value)

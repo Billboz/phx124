@@ -6,7 +6,7 @@ defmodule Vitali.Library do
   import Ecto.Query, warn: false
   alias Vitali.Repo
 
-  alias Vitali.Library.Game
+  alias Vitali.Library.{Cell, Game}
 
   @doc """
   Returns the list of games.
@@ -49,27 +49,52 @@ defmodule Vitali.Library do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_game(%{name: _name, user_id: _user} = attrs \\ %{}) do
+  def create_game(attrs \\ %{}) do
     return_value =
       %Game{}
       |> Game.changeset(attrs)
       |> Repo.insert()
 
-    {:ok, _game} = return_value
+    {:ok, game} = return_value
+    init_cells(game)
 
     # game
     # |> populate_game_with_cells()
 
     # # best line of code in the whole project
-    # {:ok, get_game!(game.id)}
+    {:ok, get_game!(game.id)}
   end
 
-  def populate_game_with_cells(game) do
-    for x <- 0..10, y <- 0..10 do
-      new_cell(%{x: x, y: y, game_id: game.id})
-    end
+  def init_cells(game) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    entries = 
+      for x <- 0..10, y <- 0..10 do
+        (%{x: x, y: y, game_id: game.id, inserted_at: now, updated_at: now})
+      end
+
+    Repo.insert_all(Cell, entries)
 
     game
+  end
+
+  def save_cells(game, board) do
+    delete_cells(game)
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    entries = 
+      for {{x, y}, alive} <- board do
+        (%{x: x, y: y, game_id: game.id, is_live: alive, inserted_at: now, updated_at: now})
+      end
+
+    Repo.insert_all(Cell, entries)
+
+    game
+  end
+
+  def delete_cells(game) do
+    from(c in Cell, where: c.game_id == ^game.id)
+    |> Repo.delete_all()
   end
 
   def new_cell(%{x: _x, y: _y, game_id: _game} = attrs) do
