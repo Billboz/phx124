@@ -89,6 +89,7 @@ defmodule Vitali.Library do
 
     Repo.insert_all(Cell, entries)
 
+    broadcast(board, game.id)
     game
   end
 
@@ -160,5 +161,23 @@ defmodule Vitali.Library do
   """
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
+  end
+
+  def topic(game_id) do
+    "game:#{game_id}"
+  end
+
+  def next(board, game_id) do
+    next_board = Board.next(board)
+    broadcast(next_board, game_id)
+    next_board
+  end
+
+  def subscribe(game_id) do
+    Phoenix.PubSub.subscribe(Vitali.PubSub, topic(game_id))
+  end
+
+  def broadcast(board, game_id) do
+    Phoenix.PubSub.broadcast(Vitali.PubSub, topic(game_id), {:next, board})
   end
 end

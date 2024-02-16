@@ -13,8 +13,7 @@ defmodule VitaliWeb.BuilderLive do
     <div class="flex items-center justify-center">
       <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
         <%= for x <- 0..Board.width(), y <- 0..Board.height() do %>
-          <% cell = @board[{x, y}] %>
-          <.life_cell x={x} y={y} live={cell}/>
+          <.life_cell x={x} y={y} live={@board[{x, y}]}/>
         <% end %>
       </svg>
     </div>
@@ -89,7 +88,7 @@ defmodule VitaliWeb.BuilderLive do
   end
 
   defp next(socket) do
-    board = Board.next(socket.assigns.board)
+    board = Library.next(socket.assigns.board, socket.assigns.game.id)
     assign(socket, board: board)
   end
 end
