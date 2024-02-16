@@ -28,6 +28,9 @@ defmodule VitaliWeb.CoreComponents do
   def life_cell(assigns) do
     ~H"""
       <rect
+        phx-click="toggle"
+        phx-value-x={@x}
+        phx-value-y={@y}
         width={Integer.to_string(@width - 1)}
         height={Integer.to_string(@height - 1)}
         x={Integer.to_string(@x * @width)}

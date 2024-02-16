@@ -55,13 +55,13 @@ defmodule Vitali.Library do
       |> Game.changeset(attrs)
       |> Repo.insert()
 
-    {:ok, game} = return_value
+    {:ok, _game} = return_value
 
-    game
-    |> populate_game_with_cells()
+    # game
+    # |> populate_game_with_cells()
 
-    # best line of code in the whole project
-    {:ok, get_game!(game.id)}
+    # # best line of code in the whole project
+    # {:ok, get_game!(game.id)}
   end
 
   def populate_game_with_cells(game) do
