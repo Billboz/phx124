@@ -6,7 +6,6 @@ defmodule Vitali.Library.Game do
     field(:name, :string)
     # field(:user_id, :id)
     has_many(:cells, Vitali.Library.Cell)
-
     belongs_to(:user, Vitali.Accounts.User)
 
     timestamps()

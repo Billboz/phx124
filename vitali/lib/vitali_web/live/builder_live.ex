@@ -1,7 +1,7 @@
 defmodule VitaliWeb.BuilderLive do
   # alias Vitali.Accounts
   # alias Vitali.Accounts.User
-  alias Vitali.{Library, Board}
+  alias Vitali.Board
 
   import VitaliWeb.CoreComponents
 
@@ -11,9 +11,6 @@ defmodule VitaliWeb.BuilderLive do
     ~H"""
     <h1 class="text-4xl text-center">Builder</h1>
     <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
-    <% game = @game %>
-    <% cells = @game.cells %>
-
       <%= for x <- 0..10, y <- 0..10 do %>
       <% cell = @board[{x, y}] %>
 

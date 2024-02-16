@@ -20,6 +20,7 @@ defmodule VitaliWeb.GameLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:name]} type="text" label="Name" />
+        <.input field={@form[:user_id]} type="hidden" label="" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Game</.button>
         </:actions>
