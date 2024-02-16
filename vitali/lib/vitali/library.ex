@@ -4,8 +4,8 @@ defmodule Vitali.Library do
   """
 
   import Ecto.Query, warn: false
-  alias Vitali.Repo
 
+  alias Vitali.{Board, Repo}
   alias Vitali.Library.{Cell, Game}
 
   @doc """
@@ -68,8 +68,8 @@ defmodule Vitali.Library do
   def init_cells(game) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-    entries = 
-      for x <- 0..10, y <- 0..10 do
+    entries =
+      for x <- 0..39, y <- 0..39 do
         (%{x: x, y: y, game_id: game.id, inserted_at: now, updated_at: now})
       end
 
@@ -82,7 +82,7 @@ defmodule Vitali.Library do
     delete_cells(game)
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-    entries = 
+    entries =
       for {{x, y}, alive} <- board do
         (%{x: x, y: y, game_id: game.id, is_live: alive, inserted_at: now, updated_at: now})
       end
@@ -90,6 +90,12 @@ defmodule Vitali.Library do
     Repo.insert_all(Cell, entries)
 
     game
+  end
+
+  def to_board(game_id) do
+    from(c in Cell, where: c.game_id == ^game_id)
+    |> Repo.all()
+    |> Board.new()
   end
 
   def delete_cells(game) do
