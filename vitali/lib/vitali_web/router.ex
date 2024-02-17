@@ -90,7 +90,7 @@ defmodule VitaliWeb.Router do
       live("/games/:id", GameLive.Show, :show)
       live("/games/:id/show/edit", GameLive.Show, :edit)
       live("/games/:id/run", GameLive.Show)
-      live("/games/:id/watch", GameLive.Show)
+      live("/games/:id/watch", WatcherLive)
     end
   end
 

@@ -17,8 +17,7 @@
     <div class="sr-only">
       <.link navigate={~p"/games/#{game.id}"}>Show</.link>
     </div>
-    <.link patch={~p"/games/run/#{game.id}"} class="text-red font-bold">Run</.link>
-    <.link patch={~p"/games/watch#{game.id}"} class="text-blue font-bold">Watch</.link>
+    <.link patch={~p"/games/#{game.id}/watch"} class="text-blue font-bold">Watch</.link>
     <.link patch={~p"/life/builder/#{game}"} class="text-grey font-bold">Edit</.link>
   </:action>
   <:action :let={{id, game}}>

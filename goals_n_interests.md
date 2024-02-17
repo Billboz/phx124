@@ -31,3 +31,6 @@
   - field needs data - email without '@' & '.' (or some other data processing to backfill)
   - see; https://dashbit.co/blog/automatic-and-manual-ecto-migrations
   - https://elixirforum.com/t/how-to-use-ecto-in-a-mix-task-within-a-phoenix-project/47573 - mix task with app_start
+
+
+  CRC = Construct, Reduce, Convert
